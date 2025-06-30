@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="30dp"
+    tools:context=".ui.activities.ProfileActivity">
+
+
+    <ImageView
+        android:id="@+id/imagem_profile"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/empty_profile"
+        app:layout_constraintBottom_toTopOf="@+id/alterar_foto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_profile" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="110dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/alterar_foto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_photo_icon"
+        app:fabCustomSize="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imagem_profile"
+        app:layout_constraintEnd_toEndOf="@+id/imagem_profile" />
+
+    <EditText
+        android:id="@+id/nome_publico"
+        android:hint="Digite o usuário(público)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagem_profile"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="12dp"
+        android:drawableStart="@drawable/user_icon"
+        android:drawablePadding="10dp"
+        android:paddingEnd="12dp"
+        android:inputType="text"
+        android:background="@drawable/edit_text_shape"/>
+
+    <EditText
+        android:id="@+id/nome_completo"
+        android:hint="Nome completo"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="12dp"
+        android:drawableStart="@drawable/person_pin_icon"
+        android:drawablePadding="10dp"
+        android:paddingEnd="12dp"
+        android:inputType="text"
+        android:background="@drawable/edit_text_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nome_publico" />
+
+
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="16dp"
+        android:backgroundTint="@color/purple_color"
+        android:id="@+id/salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nome_completo"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

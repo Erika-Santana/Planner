@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/editTextTitleTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Título da tarefa"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioridade:"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupPriority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            >
+
+            <RadioButton
+                android:id="@+id/radioImportant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Importante" />
+
+            <RadioButton
+                android:id="@+id/radioLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Leve" />
+
+            <RadioButton
+                android:id="@+id/radioOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OK" />
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data:"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Selecionar data"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            android:layout_marginBottom="16dp" />
+
+
+        <EditText
+            android:id="@+id/editTextDescriptionTask"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="Descrição da tarefa"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            />
+
+    </LinearLayout>
+</ScrollView>
