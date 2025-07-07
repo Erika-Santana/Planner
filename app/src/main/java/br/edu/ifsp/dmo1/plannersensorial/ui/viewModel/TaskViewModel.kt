@@ -1,5 +1,6 @@
 package br.edu.ifsp.dmo1.plannersensorial.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +25,8 @@ class TaskViewModel: ViewModel() {
 
     fun carregarTasksDoUsuario(type: TaskReloadType) {
         viewModelScope.launch {
-            val lista = TaskDatabase().selectTaskByTopic(type)
+            val lista = databaseTask.selectTaskByTopic(type)
+            Log.d("TaskViewModel", "Foram carregadas ${lista.size} tarefas")
             _taskList.postValue(lista)
         }
     }

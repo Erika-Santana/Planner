@@ -1,5 +1,6 @@
 package br.edu.ifsp.dmo1.plannersensorial.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +27,9 @@ class TaskAdapter(private var tasks: MutableList<Task>, private val onItemClick:
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
-        holder.titulo.text = task.getTitle()
-        holder.horario.text = task.getData().toString()
-        holder.prioridade.text = task.getPriority().toString()
+        holder.titulo.text = task.title
+        holder.horario.text = task.data.toString()
+        holder.prioridade.text = task.statusLevel.toString()
         holder.btnOpen.setOnClickListener {
             onItemClick(task)
         }
@@ -43,8 +44,10 @@ class TaskAdapter(private var tasks: MutableList<Task>, private val onItemClick:
     }
 
     fun updateTasks(task: List<Task>){
+        Log.d("TaskAdapter", "Atualizando adapter com ${task.size} tarefas")
         this.tasks.clear()
         this.tasks.addAll(task)
+        Log.d("TaskAdapter", "Tarefas adapter com ${this.tasks} tarefas")
         this.notifyDataSetChanged()
     }
 
