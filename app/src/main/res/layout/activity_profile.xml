@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/azul_claro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
     tools:context=".ui.activities.ProfileActivity">
 
 
@@ -33,7 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/edit_photo_icon"
+        android:backgroundTint="@color/black"
         app:fabCustomSize="50dp"
+        app:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/imagem_profile"
         app:layout_constraintEnd_toEndOf="@+id/imagem_profile" />
 
@@ -46,12 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="60dp"
+        android:textColorHint="@color/cinza"
         android:layout_marginEnd="16dp"
         android:paddingStart="12dp"
         android:drawableStart="@drawable/user_icon"
         android:drawablePadding="10dp"
         android:paddingEnd="12dp"
+        app:layout_goneMarginTop="50dp"
         android:inputType="text"
         android:background="@drawable/edit_text_shape"/>
 
@@ -68,6 +72,7 @@
         android:drawablePadding="10dp"
         android:paddingEnd="12dp"
         android:inputType="text"
+        android:textColorHint="@color/cinza"
         android:background="@drawable/edit_text_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,14 +80,17 @@
 
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="16dp"
-        android:backgroundTint="@color/purple_color"
         android:id="@+id/salvar"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/cinza"
         android:text="Salvar"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nome_completo"/>
+        app:layout_constraintTop_toBottomOf="@+id/nome_completo"
+        app:layout_constraintVertical_bias="0.303" />
 </androidx.constraintlayout.widget.ConstraintLayout>

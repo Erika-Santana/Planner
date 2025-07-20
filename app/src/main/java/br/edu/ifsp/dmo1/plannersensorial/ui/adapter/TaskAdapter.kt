@@ -10,8 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifsp.dmo1.plannersensorial.R
 import br.edu.ifsp.dmo1.plannersensorial.model.entities.Task
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class TaskAdapter(private var tasks: MutableList<Task>, private val onItemClick: (Task) -> Unit ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private var tasks: List<Task> = emptyList(),
+                  private val onItemClick: (Task) -> Unit ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -28,13 +32,18 @@ class TaskAdapter(private var tasks: MutableList<Task>, private val onItemClick:
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
         holder.titulo.text = task.title
-        holder.horario.text = task.data.toString()
+        holder.horario.text = formatarTimestamp(task.data)
         holder.prioridade.text = task.statusLevel.toString()
         holder.btnOpen.setOnClickListener {
             onItemClick(task)
         }
     }
 
+    fun formatarTimestamp(timestamp: Timestamp): String {
+        val date = timestamp.toDate()
+        val formatador = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return formatador.format(date)
+    }
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titulo = itemView.findViewById<TextView>(R.id.txtTitulo)
@@ -43,12 +52,9 @@ class TaskAdapter(private var tasks: MutableList<Task>, private val onItemClick:
         val btnOpen = itemView.findViewById<ImageButton>(R.id.btnOpenTask)
     }
 
-    fun updateTasks(task: List<Task>){
-        Log.d("TaskAdapter", "Atualizando adapter com ${task.size} tarefas")
-        this.tasks.clear()
-        this.tasks.addAll(task)
-        Log.d("TaskAdapter", "Tarefas adapter com ${this.tasks} tarefas")
-        this.notifyDataSetChanged()
+    fun updateTasks(newTasks: List<Task>) {
+        this.tasks = newTasks
+        notifyDataSetChanged()
     }
 
 }

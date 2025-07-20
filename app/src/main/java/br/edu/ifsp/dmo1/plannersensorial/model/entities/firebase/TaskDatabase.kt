@@ -11,29 +11,38 @@ import kotlinx.coroutines.tasks.await
 
 class TaskDatabase {
 
-    fun createTask(title: String, descricao: String, statusLevel: Priorities, data: Timestamp, onResult: (Boolean) -> Unit){
+    fun createTask(
+        title: String,
+        descricao: String,
+        statusLevel: Priorities,
+        data: Timestamp,
+        image: String,
+        callback: (Boolean, Task?) -> Unit,
+
+    ) {
         val usuario = getUsuarioUid()
-        if (usuario != null){
+        if (usuario != null) {
             val db = Firebase.firestore
-                val task = hashMapOf(
-                    "title" to title,
-                    "descricao" to descricao,
-                    "statusLevel" to statusLevel,
-                    "data" to data,
-                    "uid" to usuario)
+            val docRef = db.collection("tasks").document()
 
-                db.collection("tasks")
-                    .add(task)
-                    .addOnSuccessListener {
-                        onResult(true)
-                    }
-                    .addOnFailureListener{
-                        onResult(false)
-                    }
+            val task = Task(
+                id = docRef.id,
+                title = title,
+                descricao = descricao,
+                statusLevel = statusLevel,
+                data = data,
+                uid = usuario,
+                imageTask = image
+            )
 
+            docRef.set(task)
+                .addOnSuccessListener { callback(true, task) }
+                .addOnFailureListener { callback(false, null) }
+        } else {
+            callback(false, null)
         }
-
     }
+
 
     private fun getUsuarioUid(): String? {
         return FirebaseAuth.getInstance().currentUser?.uid
@@ -48,10 +57,25 @@ class TaskDatabase {
             TaskReloadType.DAY -> listTask = reloadByDay()
             TaskReloadType.WEEK -> listTask = reloadByWeek()
             TaskReloadType.MONTH -> listTask = reloadByMonth()
+            TaskReloadType.ALL -> listTask = reloadAll()
+
             else -> listTask = reloadByDay()
         }
 
         return listTask
+    }
+    suspend fun reloadAll(): List<Task> {
+
+        val usuario = getUsuarioUid() ?: return emptyList()
+        val db = Firebase.firestore
+
+        val lista = db.collection("tasks")
+            .whereEqualTo("uid", usuario)
+            .get()
+            .await()
+
+        return lista.mapNotNull { it.toObject(Task::class.java) }
+
     }
 
     suspend fun reloadByDay(): List<Task> {
@@ -108,6 +132,24 @@ class TaskDatabase {
         return lista.mapNotNull { it.toObject(Task::class.java) }
     }
 
+    fun getTaskById(taskId: String, callback: (Task?) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return callback(null)
+
+        Firebase.firestore.collection("tasks")
+            .whereEqualTo("uid", uid)
+            .whereEqualTo("id", taskId)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { result ->
+                val document = result.documents.firstOrNull()
+                val task = document?.toObject(Task::class.java)
+                callback(task)
+            }
+            .addOnFailureListener {
+                callback(null)
+            }
+    }
+
    suspend fun reloadByMonth(): List<Task> {
        val usuario = getUsuarioUid() ?: return emptyList()
        val monthAtual = Calendar.getInstance()
@@ -133,4 +175,21 @@ class TaskDatabase {
 
        return lista.mapNotNull { it.toObject(Task::class.java) }
    }
+
+    fun deleteTaskById(taskId: String, callback: (Boolean) -> Unit) {
+
+        val db = Firebase.firestore
+
+            db.collection("tasks")
+            .document(taskId)
+            .delete()
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
+    }
+
+
 }

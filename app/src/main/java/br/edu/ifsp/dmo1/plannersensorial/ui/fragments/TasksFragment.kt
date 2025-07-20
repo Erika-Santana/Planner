@@ -1,32 +1,56 @@
 package br.edu.ifsp.dmo1.plannersensorial.ui.fragments
 
+import android.Manifest
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.databinding.adapters.CalendarViewBindingAdapter.setDate
+import androidx.lifecycle.ViewModelProvider
 import br.edu.ifsp.dmo1.plannersensorial.R
+import br.edu.ifsp.dmo1.plannersensorial.databinding.FragmentHomeBinding
+import br.edu.ifsp.dmo1.plannersensorial.databinding.FragmentTasksBinding
+import br.edu.ifsp.dmo1.plannersensorial.helper.ReconhecimentoHelper
+import br.edu.ifsp.dmo1.plannersensorial.model.entities.Priorities
+import br.edu.ifsp.dmo1.plannersensorial.ui.Base64Converter
+import br.edu.ifsp.dmo1.plannersensorial.ui.viewModel.TaskViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
+import java.util.Locale
+import android.app.*
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TasksFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class TasksFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var taskViewModel: TaskViewModel
+    private lateinit var binding: FragmentTasksBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+
+
+    }
+
+    private fun onsetButtonListeners(taskId: String) {
+        binding.btnDeletar.setOnClickListener {
+            taskViewModel.deleteTask(taskId) {
+                Toast.makeText(requireContext(), "Tarefa deletada com sucesso!", Toast.LENGTH_SHORT).show()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
     }
 
@@ -34,19 +58,48 @@ class TasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tasks, container, false)
+
+        binding = FragmentTasksBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TasksFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val taskId = arguments?.getString("taskId")
+        if (!taskId.isNullOrEmpty()) {
+            taskViewModel.getTaskById(taskId)
+            onsetButtonListeners(taskId)
+        }
+
+        taskViewModel.selectedTask.observe(viewLifecycleOwner) { task ->
+            task?.let {
+
+                binding.taskTitle.text = it.title
+                binding.taskDescription.text = it.descricao
+                binding.taskDate.text = formatarTimestamp(it.data)
+
+
+                if (it.imageTask.isNotEmpty()) {
+                    val bitmap = Base64Converter.stringToBitmap(it.imageTask)
+                    binding.taskImage.setImageBitmap(bitmap)
+                } else {
+                    binding.taskImage.setImageResource(R.drawable.ic_task_placeholder)
                 }
             }
+        }
     }
+
+    fun formatarTimestamp(timestamp: Timestamp): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return sdf.format(timestamp.toDate())
+    }
+
 }
+
+
+
+
+
+
+

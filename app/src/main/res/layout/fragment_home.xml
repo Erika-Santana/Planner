@@ -1,24 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".ui.fragments.HomeFragment">
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.fragments.HomeFragment">
+
 
     <TextView
-        android:id="@+id/textTitulo"
+        android:id="@+id/textTarefasDoDia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="serif-monospace"
-        android:text="Manage your tasks"
+        android:layout_margin="22dp"
+        android:text="Tarefas do dia"
         android:textAlignment="center"
-        android:textStyle="italic"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sour_"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewHorizontal"/>
+
+
+            <TextView
+                android:id="@+id/naoExistemTarefas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:fontFamily="@font/sour_"
+                android:paddingTop="20dp"
+                android:text="Não existem tarefas a serem exibidas..."
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/recyclerViewHorizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTarefasDoDia" />
+
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHorizontal"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTarefasDoDia" />
+
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroupFiltro"
@@ -27,41 +71,72 @@
         app:selectionRequired="true"
         app:singleSelection="true"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/textTitulo"
+        android:backgroundTint="@color/selecao"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewHorizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="30dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dia" />
+            android:text="Dia"
+            android:textColor="@color/texto"
+            android:backgroundTint="@color/selecao"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSemana"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Semana" />
+            android:text="Semana"
+            android:textColor="@color/texto"
+            android:backgroundTint="@color/selecao"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mês" />
+            android:text="Mês"
+            android:textColor="@color/texto"
+            android:backgroundTint="@color/selecao"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAll"
+            android:layout_width="99dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/selecao"
+            android:text="Todas"
+            android:textColor="@color/texto" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/toggleGroupFiltro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView
+                android:id="@+id/naoExistemTarefas2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:fontFamily="@font/sour_"
+                android:paddingTop="20dp"
+                android:text="Não há nada aqui ..."
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/toggleGroupFiltro" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_margin="22dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.636"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toggleGroupFiltro"
+                app:layout_constraintVertical_bias="1.0" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

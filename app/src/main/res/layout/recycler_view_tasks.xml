@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/background_task"
-    android:layout_margin="8dp"
-    android:padding="2dp">
+    android:layout_height="130dp"
+    android:background="@drawable/borda_high_priority"
+    android:layout_marginTop="5dp"
+    android:padding="10dp">
+
 
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="User flow admin panel"
-        android:textColor="@android:color/black"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Tarefa"
+        android:textColor="@color/azul_claro"
         android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:drawableStart="@drawable/baseline_access_time_24"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/azul_claro"
+        android:text="10.00 AM - 05.30 PM"
+        android:textColor="@color/azul_claro"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtTitulo"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10.00 AM - 05.30 PM"
-        android:textColor="@android:color/black" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <ImageButton
         android:id="@+id/btnOpenTask"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/bg_circle_white"
-        android:backgroundTint="@color/white"
         android:contentDescription="Abrir tarefa"
         android:elevation="4dp"
         android:scaleType="centerInside"
@@ -49,20 +52,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/black" />
 
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPrioridade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/borda_high_priority"
-        android:backgroundTint="@android:color/white"
+        android:background="@drawable/borda_leve_priority"
+        app:backgroundTint="#FFFFFF"
         android:text="High Priority"
         android:textColor="#FFFFFF"
         android:textSize="10sp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:layout_constraintTop_toBottomOf="@+id/btnOpenTask"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

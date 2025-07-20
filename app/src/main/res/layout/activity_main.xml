@@ -5,14 +5,43 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.MainActivity">
+    tools:context=".ui.activities.MainActivity"
+    android:background="@color/azul_claro">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="175dp" />
+        app:layout_constraintGuide_begin="139dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sour_"
+        android:text="Bem vindo(a),"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:layout_marginTop="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_name"
+        app:layout_constraintEnd_toStartOf="@+id/criar_tarefa"
+        app:layout_constraintStart_toEndOf="@+id/image_home"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sour_"
+        android:layout_marginTop="10dp"
+        android:text="XXXX"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/criar_tarefa"
+        app:layout_constraintStart_toEndOf="@+id/image_home"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
 
     <FrameLayout
@@ -25,9 +54,9 @@
 
     <ImageView
         android:id="@+id/image_home"
-        android:layout_width="95dp"
-        android:layout_height="94dp"
-        android:layout_marginLeft="20dp"
+        android:layout_width="77dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,38 +64,18 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/notificacoes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/circle_background"
-        android:src="@drawable/baseline_notifications_none_24"
-        app:fabCustomSize="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/criar_tarefa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="30dp"
         android:background="@drawable/circle_background"
+        android:backgroundTint="#000000"
         android:src="@drawable/baseline_add_24"
         app:fabCustomSize="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/notificacoes"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#FFFFFF"/>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit_perfil"
-        android:layout_width="37dp"
-        android:layout_height="38dp"
-        android:src="@drawable/edit_photo_icon"
-        app:fabCustomSize="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_home"
-        app:layout_constraintEnd_toEndOf="@+id/image_home" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -76,6 +85,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@color/azul_claro"
+        app:backgroundTint="@color/black"
         app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="purple_color">#440860</color>
-    <color name="purple">#F3C2FF</color>
+    <color name="azul_claro">#EBEFF0</color>
+    <color name="cinza">#828282</color>
+    <color name="azul_escuro">#637581</color>
+    <color name="gray">#A7A1A1</color>
+    <color name="dourado">#ECD9B7</color>
+    <color name="ciano">#1A4D6F</color>
+
 </resources>

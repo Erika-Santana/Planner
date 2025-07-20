@@ -116,7 +116,6 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun createProfile() {
-
         galeryAccessAndButton()
 
         viewBinding.salvar.setOnClickListener{
@@ -144,7 +143,6 @@ class ProfileActivity : AppCompatActivity() {
                             finish()
                         }
                 }else{
-
                     Toast.makeText(this, "Por favor, insira os valores e a foto!", Toast.LENGTH_SHORT).show()
                 }
             }

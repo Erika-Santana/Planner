@@ -25,10 +25,10 @@ class SignUpActivity : AppCompatActivity() {
             val senha = viewBinding.digiteSenha.text.toString()
             val confirmaSenha = viewBinding.confirmeSenha.text.toString()
 
-            if (login.isEmpty() || senha.isEmpty()) {
-                Toast.makeText(this, "Por favor preencha os campos!", Toast.LENGTH_SHORT).show()
+            if (login.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty()) {
+                Toast.makeText(this, "Por favor preencha todos os campos!", Toast.LENGTH_SHORT).show()
             } else {
-                if (senha.equals(confirmaSenha)) {
+                if (senha == confirmaSenha) {
                     firebaseAuth
                         .createUserWithEmailAndPassword(login, senha)
                         .addOnCompleteListener { task ->
@@ -40,6 +40,8 @@ class SignUpActivity : AppCompatActivity() {
                                     .show()
                             }
                         }
+                } else {
+                    Toast.makeText(this, "As senhas são diferentes. Por favor insira os valores iguais!", Toast.LENGTH_SHORT).show()
                 }
             }
         }

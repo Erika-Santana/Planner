@@ -1,6 +1,5 @@
 package br.edu.ifsp.dmo1.plannersensorial.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,19 +21,55 @@ class TaskViewModel: ViewModel() {
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> = _taskList
 
+    private val _taskListHorizontal = MutableLiveData<List<Task>>()
+    val taskListHorizontal: LiveData<List<Task>> = _taskListHorizontal
+
+    private val _selectedTask = MutableLiveData<Task?>()
+    val selectedTask: LiveData<Task?> = _selectedTask
 
     fun carregarTasksDoUsuario(type: TaskReloadType) {
         viewModelScope.launch {
             val lista = databaseTask.selectTaskByTopic(type)
-            Log.d("TaskViewModel", "Foram carregadas ${lista.size} tarefas")
             _taskList.postValue(lista)
         }
     }
 
-    fun verificaCreateTask(title: String, descricao: String, statusLevel: Priorities, data: Timestamp) {
-        databaseTask.createTask(title, descricao, statusLevel, data) { status ->
-            _status.postValue(status)
+    fun carregarTasksDoDiaParaHorizontal() {
+        viewModelScope.launch {
+            val lista = databaseTask.reloadByDay()
+            _taskListHorizontal.postValue(lista)
         }
     }
+
+    fun createTaskAndReturn(
+        title: String,
+        descricao: String,
+        statusLevel: Priorities,
+        data: Timestamp,
+        image: String,
+        callback: (Boolean, Task?) -> Unit
+    ) {
+        databaseTask.createTask(title, descricao, statusLevel, data, image) { success, task ->
+            callback(success, task)
+            _status.postValue(true)
+        }
+    }
+
+    fun getTaskById(taskId: String) {
+        databaseTask.getTaskById(taskId) { task ->
+            _selectedTask.postValue(task)
+        }
+    }
+    fun deleteTask(taskId: String, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            databaseTask.deleteTaskById(taskId) { success ->
+                if (success) {
+                    carregarTasksDoUsuario(TaskReloadType.ALL)
+                }
+                callback(success)
+            }
+        }
+    }
+
 
 }
