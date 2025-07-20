@@ -179,7 +179,6 @@ class TaskDatabase {
     fun deleteTaskById(taskId: String, callback: (Boolean) -> Unit) {
 
         val db = Firebase.firestore
-
             db.collection("tasks")
             .document(taskId)
             .delete()

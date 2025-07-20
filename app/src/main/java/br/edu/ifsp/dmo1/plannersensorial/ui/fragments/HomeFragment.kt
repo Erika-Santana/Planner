@@ -31,9 +31,7 @@ class HomeFragment : Fragment() {
     }
 
     fun toggleButton(){
-        val toggleGroup = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroupFiltro)
-        if (toggleGroup != null) {
-
+        val toggleGroup = _binding.toggleGroupFiltro
             toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
                 if (isChecked) {
                     when (checkedId) {
@@ -44,7 +42,7 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-        }
+
     }
 
     override fun onCreateView(
@@ -59,6 +57,7 @@ class HomeFragment : Fragment() {
             super.onViewCreated(view, savedInstanceState)
             toggleButton()
             configAdapter()
+
            taskViewModel.taskListHorizontal.observe(viewLifecycleOwner) { tarefasFixas ->
                taskAdapterHorizontal.updateTasks(tarefasFixas)
 
@@ -78,8 +77,7 @@ class HomeFragment : Fragment() {
                    _binding.naoExistemTarefas2.visibility = View.GONE
                }
            }
-           taskViewModel.carregarTasksDoUsuario(TaskReloadType.DAY)
-           taskViewModel.carregarTasksDoDiaParaHorizontal()
+
         }
 
 
@@ -118,9 +116,4 @@ class HomeFragment : Fragment() {
         _binding.recyclerView.adapter = taskAdapter
     }
 
-    override fun onResume() {
-        super.onResume()
-        taskViewModel.carregarTasksDoUsuario(TaskReloadType.DAY)
-        taskViewModel.carregarTasksDoDiaParaHorizontal()
-    }
 }

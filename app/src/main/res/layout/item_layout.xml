@@ -3,8 +3,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
-    android:layout_height="250dp"
+    android:layout_width="150dp"
+    android:layout_height="200dp"
     android:layout_margin="3dp"
     card_view:cardElevation="4dp"
     card_view:cardBackgroundColor="#6E7DA1">
@@ -16,16 +16,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardImage"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             app:cardBackgroundColor="@android:color/transparent"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="1"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-           >
+            app:layout_constraintWidth_percent="1">
 
             <ImageView
                 android:id="@+id/taskImage"
@@ -44,7 +43,10 @@
             android:id="@+id/taskTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="Design Meeting"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
@@ -58,33 +60,33 @@
             android:id="@+id/taskHoras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="10:00 - 11:30 PM"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.17"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/taskTitulo" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPrioridade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="128dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/borda_high_priority"
             android:backgroundTint="#FFFFFF"
-            app:backgroundTint="#FFFFFF"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="High Priority"
             android:textColor="#FFFFFF"
             android:textSize="10sp"
+            app:backgroundTint="#FFFFFF"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.521"
+            card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/taskHoras"
-            card_view:layout_constraintVertical_bias="0.483" />
+            card_view:layout_constraintVertical_bias="0.384" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

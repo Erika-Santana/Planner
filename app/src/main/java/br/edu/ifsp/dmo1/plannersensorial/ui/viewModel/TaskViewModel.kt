@@ -27,6 +27,7 @@ class TaskViewModel: ViewModel() {
     private val _selectedTask = MutableLiveData<Task?>()
     val selectedTask: LiveData<Task?> = _selectedTask
 
+
     fun carregarTasksDoUsuario(type: TaskReloadType) {
         viewModelScope.launch {
             val lista = databaseTask.selectTaskByTopic(type)
@@ -52,6 +53,11 @@ class TaskViewModel: ViewModel() {
         databaseTask.createTask(title, descricao, statusLevel, data, image) { success, task ->
             callback(success, task)
             _status.postValue(true)
+
+            if (success) {
+                carregarTasksDoUsuario(TaskReloadType.DAY)
+                carregarTasksDoDiaParaHorizontal()
+            }
         }
     }
 

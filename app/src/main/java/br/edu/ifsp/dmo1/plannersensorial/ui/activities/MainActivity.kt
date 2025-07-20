@@ -29,6 +29,7 @@ import br.edu.ifsp.dmo1.plannersensorial.helper.ReconhecimentoHelper
 import br.edu.ifsp.dmo1.plannersensorial.helper.TaskNotificationReceiver
 import br.edu.ifsp.dmo1.plannersensorial.model.entities.Priorities
 import br.edu.ifsp.dmo1.plannersensorial.model.entities.Task
+import br.edu.ifsp.dmo1.plannersensorial.model.entities.TaskReloadType
 import br.edu.ifsp.dmo1.plannersensorial.model.entities.firebase.TaskDatabase
 import br.edu.ifsp.dmo1.plannersensorial.ui.Base64Converter
 import br.edu.ifsp.dmo1.plannersensorial.ui.fragments.HomeFragment
@@ -36,6 +37,7 @@ import br.edu.ifsp.dmo1.plannersensorial.ui.fragments.TasksFragment
 import br.edu.ifsp.dmo1.plannersensorial.ui.viewModel.TaskViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -77,8 +79,20 @@ class MainActivity : AppCompatActivity(), CameraHelper.Callback {
         repository = TaskDatabase()
         taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         notificacaoHelper = NotificacaoHelper(this)
-        originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.imagem_generica3)
 
+
+        val imagensGenericas = listOf(
+            R.drawable.imagem_generica2,
+            R.drawable.imagem_generica3,
+            R.drawable.imagem_generica4,
+            R.drawable.imagem_generica5,
+            R.drawable.imagem_generica6
+
+        )
+
+        val imagemEscolhida = imagensGenericas.random()
+
+        originalBitmap = BitmapFactory.decodeResource(resources, imagemEscolhida)
 
         val taskId = intent.getStringExtra("taskId")
         if (!taskId.isNullOrEmpty()) {
@@ -105,7 +119,7 @@ class MainActivity : AppCompatActivity(), CameraHelper.Callback {
 
     private fun reloadInfos() {
         val email = firebaseAuth.currentUser?.email ?: return
-        val db = com.google.firebase.Firebase.firestore
+        val db = Firebase.firestore
 
         db.collection("usuarios").document(email).get()
             .addOnCompleteListener { task ->
@@ -281,15 +295,29 @@ class MainActivity : AppCompatActivity(), CameraHelper.Callback {
             }
 
             val imageString = Base64Converter.drawableToString(BitmapDrawable(resources, originalBitmap))
+
+            val imagensGenericas = listOf(
+                R.drawable.imagem_generica2,
+                R.drawable.imagem_generica3,
+                R.drawable.imagem_generica4,
+                R.drawable.imagem_generica5,
+                R.drawable.imagem_generica6
+
+            )
+            val imagemEscolhida = imagensGenericas.random()
+
+            originalBitmap = BitmapFactory.decodeResource(resources, imagemEscolhida)
             taskViewModel.createTaskAndReturn(title, descricao, statusValue, dataSelecionada!!, imageString) { sucesso, task ->
                 if (sucesso && task != null) {
                     notificacaoHelper.exibirNotificacao("Tarefa criada!", "Sua tarefa foi adicionada com sucesso.")
                     agendarNotificacao(task)
+                    taskViewModel.carregarTasksDoDiaParaHorizontal()
+                    taskViewModel.carregarTasksDoUsuario(TaskReloadType.DAY)
                 } else {
                     notificacaoHelper.exibirNotificacao("Erro", "Tarefa não foi criada!")
                 }
             }
-            taskViewModel.carregarTasksDoDiaParaHorizontal()
+
             alertDialog.dismiss()
         }
     }

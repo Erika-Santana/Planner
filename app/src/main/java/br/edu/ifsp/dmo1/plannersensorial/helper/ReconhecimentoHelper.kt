@@ -38,7 +38,7 @@ class ReconhecimentoHelper(
             }
 
             override fun onError(error: Int) {
-                callback.onErroReconhecimento("Erro $error")
+                //callback.onErroReconhecimento("Erro $error")
             }
 
             override fun onReadyForSpeech(params: Bundle?) {}

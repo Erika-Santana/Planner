@@ -53,8 +53,11 @@ class TaskAdapter(private var tasks: List<Task> = emptyList(),
     }
 
     fun updateTasks(newTasks: List<Task>) {
-        this.tasks = newTasks
-        notifyDataSetChanged()
+        if (tasks != newTasks) {
+            this.tasks = newTasks
+            notifyDataSetChanged()
+        }
     }
+
 
 }
